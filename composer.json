@@ -38,7 +38,7 @@
         "psr-0": { "Omnipay\\Adyen\\" : "src/" }
     },
     "require": {
-        "omnipay/common": "~2.0"
+        "omnipay/common": "~2.4"
     },
     "require-dev": {
         "omnipay/tests": "~2.0"
