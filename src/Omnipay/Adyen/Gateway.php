@@ -23,6 +23,7 @@ class Gateway extends AbstractGateway
     {
         return array(
             'testMode' => true,
+            'redirectMethod' => 'POST',
             'secret' => 'see-what-is-configured-in-the-adyen-skin',
         );
     }
@@ -55,6 +56,19 @@ class Gateway extends AbstractGateway
     public function setMerchantAccount($value)
     {
         return $this->setParameter('merchantAccount', $value);
+    }
+
+    public function getRedirectMethod()
+    {
+        return $this->getParameter('redirectMethod');
+    }
+
+    /**
+     * @param string $value Use GET or POST redirection.
+     */
+    public function setRedirectMethod($value)
+    {
+        return $this->setParameter('redirectMethod', $value);
     }
 
     public function getSkinCode()

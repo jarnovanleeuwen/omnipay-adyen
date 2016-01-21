@@ -151,6 +151,19 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('blockedMethods', $value);
     }
 
+    public function getRedirectMethod()
+    {
+        return $this->getParameter('redirectMethod');
+    }
+
+    /**
+     * @param string $value Use GET or POST redirection. POST by default.
+     */
+    public function setRedirectMethod($value)
+    {
+        return $this->setParameter('redirectMethod', $value);
+    }
+
     public function getShopperReference()
     {
         return $this->getParameter('shopperReference');
@@ -266,7 +279,11 @@ class PurchaseRequest extends AbstractRequest
      */
     public function sendData($data)
     {
-        return $this->response = new PurchaseResponse($this, $data);
+        $purchaseResponse = new PurchaseResponse($this, $data);
+        
+        $purchaseResponse->setRedirectMethod($this->getRedirectMethod());
+
+        return $this->response = $purchaseResponse;
     }
 
     public function getEndpoint()
