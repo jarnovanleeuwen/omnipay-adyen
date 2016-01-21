@@ -10,8 +10,7 @@ use Omnipay\Common\Message\AbstractRequest;
 class PurchaseRequest extends AbstractRequest
 {
     protected $liveEndpoint = 'https://live.adyen.com/hpp/pay.shtml';
-    protected $testEndpoint = 'https://test.adyen.com/hpp/pay.shtml';        // Hosted Payment Pages (Single):
-    //~ protected $testEndpoint = 'https://test.adyen.com/hpp/select.shtml'; // Hosted Payment Pages (multiple)
+    protected $testEndpoint = 'https://test.adyen.com/hpp/pay.shtml';
 
     public function getMerchantAccount()
     {
@@ -80,6 +79,26 @@ class PurchaseRequest extends AbstractRequest
     public function setSessionValidity($value)
     {
         return $this->setParameter('sessionValidity', $value);
+    }
+
+    public function getBrandCode()
+    {
+        return $this->getParameter('brandCode');
+    }
+
+    public function setBrandCode($value)
+    {
+        return $this->setParameter('brandCode', $value);
+    }
+
+    public function getIssuerId()
+    {
+        return $this->getParameter('issuerId');
+    }
+
+    public function setIssuerId($value)
+    {
+        return $this->setParameter('issuerId', $value);
     }
 
     public function getMerchantReference()
@@ -191,6 +210,16 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('shopperEmail', $value);
     }
 
+    public function getSkipSelection()
+    {
+        return $this->getParameter('skipSelection');
+    }
+
+    public function setSkipSelection($value)
+    {
+        return $this->setParameter('skipSelection', $value);
+    }
+
     public function getCountryCode()
     {
         return $this->getParameter('countryCode');
@@ -229,6 +258,8 @@ class PurchaseRequest extends AbstractRequest
         $data['shipBeforeDate'] = $this->getShipBeforeDate();
         $data['merchantReference'] = $this->getMerchantReference();
         $data['skinCode'] = $this->getSkinCode();
+        $data['brandCode'] = $this->getBrandCode();
+        $data['issuerId'] = $this->getIssuerId();
         $data['merchantAccount'] = $this->getMerchantAccount();
         $data['sessionValidity'] = $this->getSessionValidity();
         $data['shopperEmail'] = $this->getShopperEmail();
@@ -288,6 +319,13 @@ class PurchaseRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+
+        $endpoint = $this->getTestMode() ? $this->testEndpoint : $this->liveEndpoint;
+
+        if ($this->getSkipSelection()) {
+            $endpoint = str_replace('pay.shtml', 'details.shtml', $endpoint);
+        }
+
+        return $endpoint;
     }
 }

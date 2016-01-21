@@ -38,6 +38,16 @@ class Gateway extends AbstractGateway
         return $this->setParameter('sessionValidity', $value);
     }
 
+    public function getIssuerId()
+    {
+        return $this->getParameter('issuerId');
+    }
+
+    public function setIssuerId($value)
+    {
+        return $this->setParameter('issuerId', $value);
+    }
+
     public function getMerchantReference()
     {
         return $this->getParameter('merchantReference');
