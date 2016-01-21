@@ -31,12 +31,12 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function getRedirectUrl()
     {
-        return $this->getRequest()->getEndpoint();
+        return $this->getRequest()->getEndpoint().'?'.http_build_query($this->getRedirectData());
     }
 
     public function getRedirectMethod()
     {
-        return 'POST';
+        return 'GET';
     }
 
     public function getRedirectData()
