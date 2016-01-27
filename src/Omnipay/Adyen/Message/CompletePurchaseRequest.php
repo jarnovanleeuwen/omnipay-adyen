@@ -113,17 +113,21 @@ class CompletePurchaseRequest extends PurchaseRequest
             'reason'                => $this->getReason(),
         );
 
+        $params = array_filter($params);
+
+        ksort($params, SORT_STRING);
+
+        // The character escape function
         $escapeval = function ($val) {
             return str_replace(':', '\\:', str_replace('\\', '\\\\', $val));
         };
 
-        $params = array_filter($params);
-        ksort($params, SORT_STRING);
+        // Generate the signing data string
+        $signData = implode(':', array_map($escapeval, array_merge(array_keys($params), array_values($params))));
 
-        $signData = implode(":", array_map($escapeval, array_merge(array_keys($params), array_values($params))));
-
-        $merchantSig = base64_encode(hash_hmac('sha256', $signData, pack("H*", $this->getSecret()), true));
-        return $merchantSig;
+        // base64 encoding is necessary because the string needs to be send over the internet and
+        // the hexadecimal result of the HMAC encryption could include escape characters
+        return base64_encode(hash_hmac('sha256', $signData, pack("H*", $this->getSecret()), true));
     }
 
     public function send()
