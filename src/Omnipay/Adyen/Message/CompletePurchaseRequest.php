@@ -90,6 +90,16 @@ class CompletePurchaseRequest extends PurchaseRequest
         return $this->setParameter('paymentMethod', $value);
     }
 
+    public function getReason()
+    {
+        return $this->getParameter('reason');
+    }
+
+    public function setReason($value)
+    {
+        return $this->setParameter('reason', $value);
+    }
+
     public function generateResponseSignature()
     {
         $params = array(
@@ -99,7 +109,8 @@ class CompletePurchaseRequest extends PurchaseRequest
             'skinCode'              => $this->getSkinCode(),
             'paymentMethod'         => $this->getPaymentMethod(),
             'shopperLocale'         => $this->getShopperLocale(),
-            'merchantReturnData'    => $this->getMerchantReturnData()
+            'merchantReturnData'    => $this->getMerchantReturnData(),
+            'reason'                => $this->getReason(),
         );
 
         $escapeval = function ($val) {
