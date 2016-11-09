@@ -210,6 +210,21 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('shopperEmail', $value);
     }
 
+    public function getShopperStatement()
+    {
+        return $this->getParameter('shopperStatement');
+    }
+
+    /**
+     * Optional.
+     * ${reference} for the merchant reference
+     * ${pspReference} for the psp reference
+     */
+    public function setShopperStatement($value)
+    {
+        return $this->setParameter('shopperStatement', $value);
+    }
+
     public function getSkipSelection()
     {
         return $this->getParameter('skipSelection');
@@ -264,6 +279,7 @@ class PurchaseRequest extends AbstractRequest
         $data['sessionValidity'] = $this->getSessionValidity();
         $data['shopperEmail'] = $this->getShopperEmail();
         $data['shopperReference'] = $this->getShopperReference();
+        $data['shopperStatement'] = $this->getShopperStatement();
         $data['recurringContract'] = $this->getRecurringContract();
         $data['allowedMethods'] = $this->getAllowedMethods();
         $data['blockedMethods'] = $this->getBlockedMethods();
@@ -311,7 +327,7 @@ class PurchaseRequest extends AbstractRequest
     public function sendData($data)
     {
         $purchaseResponse = new PurchaseResponse($this, $data);
-        
+
         $purchaseResponse->setRedirectMethod($this->getRedirectMethod());
 
         return $this->response = $purchaseResponse;
