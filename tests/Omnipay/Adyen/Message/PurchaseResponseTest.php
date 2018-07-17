@@ -6,7 +6,6 @@ use Omnipay\Tests\TestCase;
 
 class PurchaseResponseTest extends TestCase
 {
-    
     public function setUp()
     {
         $this->response = new PurchaseResponse($this->getMockRequest(), array(
@@ -19,9 +18,10 @@ class PurchaseResponseTest extends TestCase
             'merchantAccount' => 'testacc',
             'secret' => 'test',
             'shopperLocale' => 'en_GB',
-            'endPoint' => 'https://test.adyen.com/hpp/pay.shtml',
-            
+            'endPoint' => 'https://test.adyen.com/hpp/pay.shtml'
         ));
+
+        $this->response->setRedirectMethod('POST');
     }
     public function testIsSuccessful()
     {

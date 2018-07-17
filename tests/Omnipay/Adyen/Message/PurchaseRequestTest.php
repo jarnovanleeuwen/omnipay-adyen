@@ -30,12 +30,12 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame(1000, $data['paymentAmount']);
         $this->assertSame('EUR', $data['currencyCode']);
         $this->assertSame('TEST-10000', $data['merchantReference']);
-        $this->assertSame('7WVqmmy+RU0NB1r03ddvAIn9PBubG3paxcYGg4+Zo84=', $data['merchantSig']);
+        $this->assertSame('upSRkqwZjw3Q3USND3Xmjmh4e1+XBTwLFFWX4hkfhSc=', $data['merchantSig']);
     }
 
     public function testGenerateSignature()
     {
-        $this->assertSame('7WVqmmy+RU0NB1r03ddvAIn9PBubG3paxcYGg4+Zo84=', $this->request->generateSignature($this->request->getData()));
+        $this->assertSame('R3UmuIu1XARl6mhZrduuhBT6BV8+jcF/s0kyHfHi9r0=', $this->request->generateSignature($this->request->getData()));
     }
     
     public function testGetSetSessionValidity()
